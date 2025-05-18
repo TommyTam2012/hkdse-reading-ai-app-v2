@@ -48,7 +48,7 @@ let currentExamId = "";
 
 function setExam(examId) {
   currentExamId = examId;
-  const pdfUrl = `/exam/IELTS/${examId}.pdf`;
+  const pdfUrl = `/exams/hkdse/${examId}.pdf`;
   window.open(pdfUrl, "_blank");
   console.log(`📘 Exam set to ${examId}`);
 }
@@ -79,7 +79,7 @@ Only summarize the passage if the student requests it explicitly.
 `;
 
   const maxPages = 13;
-  const baseUrl = `${window.location.origin}/exam/hkdse/${currentExamId}_page`;
+  const baseUrl = `${window.location.origin}/exams/hkdse/${currentExamId}_page`;
   const imageMessages = [
     { type: "text", text: instruction },
     { type: "text", text: question }
