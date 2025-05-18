@@ -92,7 +92,7 @@ export default function App() {
 
     setResponse("Analyzing with GPT-4o, please wait...");
 
-    const totalPages = 13;
+    const totalPages = 6;
     const messages = [
       {
         type: "text",
