@@ -17,8 +17,8 @@ let currentExamId = "";
 function setExam(examId) {
   currentExamId = examId;
 
-  // Always use hkdseXXXX.pdf format
-  const pdfUrl = `/exams/hkdse/hkdse${examId}.pdf`;
+  // ✅ Working path (no hkdse prefix)
+  const pdfUrl = `/exams/hkdse/${examId}.pdf`;
   console.log(`📘 Opening exam PDF: ${pdfUrl}`);
   window.open(pdfUrl, "_blank");
 }
@@ -49,7 +49,7 @@ Only summarize the passage if the student requests it explicitly.
 `;
 
   const maxPages = 13;
-  const baseUrl = `${window.location.origin}/exams/hkdse/hkdse${currentExamId}_page`;
+  const baseUrl = `${window.location.origin}/exams/hkdse/${currentExamId}_page`;
   const imageMessages = [
     { type: "text", text: instruction },
     { type: "text", text: question }
@@ -181,4 +181,3 @@ if (window.SpeechRecognition || window.webkitSpeechRecognition) {
 window.submitQuestion = submitQuestion;
 window.setExam = setExam;
 window.clearHistory = clearHistory;
-
