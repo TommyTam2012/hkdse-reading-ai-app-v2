@@ -9,7 +9,7 @@ export default function App() {
     if (username && password) {
       setLoggedIn(true);
     } else {
-      alert("\u8bf7\u8f93\u5165\u7528\u6237\u540d\u548c\u5bc6\u7801\u3002");
+      alert("请输入用户名和密码。");
     }
   };
 
@@ -17,18 +17,18 @@ export default function App() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-blue-100">
         <div className="bg-white p-10 rounded-lg shadow-lg w-full max-w-md">
-          <h2 className="text-2xl font-bold mb-4 text-center text-blue-700">TommySir's \u6587\u51fd\u8bd5\u9605\u8bfb AI \u8003\u8bd5\u52a9\u624b</h2>
-          <p className="mb-6 text-center text-gray-600">\u767b\u5f55\u60a8\u7684\u8d26\u6237\u4ee5\u5f00\u59cb\u5b66\u4e60</p>
+          <h2 className="text-2xl font-bold mb-4 text-center text-blue-700">TommySir's 文凭试阅读 AI 考试助手</h2>
+          <p className="mb-6 text-center text-gray-600">登录您的账户以开始学习</p>
           <input
             type="text"
-            placeholder="\u8bf7\u8f93\u5165\u7528\u6237\u540d"
+            placeholder="请输入用户名"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             className="w-full mb-4 p-3 border rounded border-blue-300"
           />
           <input
             type="password"
-            placeholder="\u8bf7\u8f93\u5165\u5bc6\u7801"
+            placeholder="请输入密码"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full mb-6 p-3 border rounded border-blue-300"
@@ -37,7 +37,7 @@ export default function App() {
             onClick={handleLogin}
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
           >
-            \u767b\u5f55
+            登录
           </button>
         </div>
       </div>
@@ -45,12 +45,12 @@ export default function App() {
   }
 
   const exams = [
-    { id: "hkdse2012A", label: "\ud83d\udcd8 HKDSE Academic Reading 2012A", pdf: "/exams/hkdse/hkdse2012A.pdf" },
-    { id: "hkdse2012B", label: "\ud83d\udcd8 HKDSE Academic Reading 2012B", pdf: "/exams/hkdse/hkdse2012B.pdf" },
-    { id: "hkdse2012C", label: "\ud83d\udcd8 HKDSE Academic Reading 2012C", pdf: "/exams/hkdse/hkdse2012C.pdf" },
-    { id: "hkdse2013A", label: "\ud83d\udcd8 HKDSE Academic Reading 2013A", pdf: "/exams/hkdse/hkdse2013A.pdf" },
-    { id: "hkdse2013B", label: "\ud83d\udcd8 HKDSE Academic Reading 2013B", pdf: "/exams/hkdse/hkdse2013B.pdf" },
-    { id: "hkdse2013C", label: "\ud83d\udcd8 HKDSE Academic Reading 2013C", pdf: "/exams/hkdse/hkdse2013C.pdf" },
+    { id: "2012A", label: "📘 HKDSE Academic Reading 2012A", pdf: "/exams/hkdse/hkdse2012A.pdf" },
+    { id: "2012B", label: "📘 HKDSE Academic Reading 2012B", pdf: "/exams/hkdse/hkdse2012B.pdf" },
+    { id: "2012C", label: "📘 HKDSE Academic Reading 2012C", pdf: "/exams/hkdse/hkdse2012C.pdf" },
+    { id: "2013A", label: "📘 HKDSE Academic Reading 2013A", pdf: "/exams/hkdse/hkdse2013A.pdf" },
+    { id: "2013B", label: "📘 HKDSE Academic Reading 2013B", pdf: "/exams/hkdse/hkdse2013B.pdf" },
+    { id: "2013C", label: "📘 HKDSE Academic Reading 2013C", pdf: "/exams/hkdse/hkdse2013C.pdf" },
   ];
 
   const [selectedExamId, setSelectedExamId] = useState("");
@@ -63,7 +63,7 @@ export default function App() {
   const getVoiceForLang = (lang) => {
     const voices = window.speechSynthesis.getVoices();
     return voices.find(v => v.lang === lang) ||
-           voices.find(v => v.name.includes(lang === "zh-CN" ? "\u666e\u901a\u8bdd" : "UK English Female"));
+           voices.find(v => v.name.includes(lang === "zh-CN" ? "普通话" : "UK English Female"));
   };
 
   const speakMixed = (text) => {
@@ -86,7 +86,7 @@ export default function App() {
 
   const handleSubmit = async () => {
     if (!question || !selectedExamId) {
-      alert("\u26a0\ufe0f Please enter a question and select an exam.");
+      alert("⚠️ Please enter a question and select an exam.");
       return;
     }
 
@@ -96,13 +96,13 @@ export default function App() {
     const messages = [
       {
         type: "text",
-        text: `You are an HKDSE Academic Reading instructor. The student is working on test ${selectedExamId.toUpperCase()}. If they ask about a question (e.g., \"Q5\" or \"paragraph B\"), find the answer from the reading passage images and respond in academic English. Focus on the exact question asked. Do not summarize the passage unless requested.`,
+        text: `You are an HKDSE Academic Reading instructor. The student is working on test HKDSE${selectedExamId.toUpperCase()}. If they ask about a question (e.g., \"Q5\" or \"paragraph B\"), find the answer from the reading passage images and respond in academic English. Focus on the exact question asked. Do not summarize the passage unless requested.`,
       },
       { type: "text", text: question }
     ];
 
     for (let i = 1; i <= totalPages; i++) {
-      const url = `${window.location.origin}/exams/hkdse/${selectedExamId}_page${i}.png`;
+      const url = `${window.location.origin}/exams/hkdse/hkdse${selectedExamId}_page${i}.png`;
       messages.push({ type: "image_url", image_url: { url } });
     }
 
@@ -115,15 +115,15 @@ export default function App() {
 
       const data = await res.json();
       const english = data.response || "No response.";
-      const translated = data.translated || "\u65e0\u4e2d\u6587\u7ffb\u8bd1\u3002";
+      const translated = data.translated || "无中文翻译。";
 
-      const final = `${english}\n\n\ud83c\udde8\ud83c\uddf3 \u4e2d\u6587\u7ffb\u8bd1\uff1a${translated}`;
+      const final = `${english}\n\n🇨🇳 中文翻译：${translated}`;
       setResponse(final);
       setHistory(prev => [...prev, { question, answer: final }]);
       setQuestion("");
     } catch (err) {
       console.error("GPT error:", err);
-      setResponse("\u274c Error occurred. Please try again.");
+      setResponse("❌ Error occurred. Please try again.");
     }
   };
 
@@ -142,7 +142,7 @@ export default function App() {
       handleSubmit();
     };
     recognition.onerror = (event) => {
-      alert("\ud83c\udfa4 Speech recognition failed.");
+      alert("🎤 Speech recognition failed.");
       console.error("Mic error:", event.error);
     };
 
@@ -152,11 +152,11 @@ export default function App() {
   return (
     <div className="p-6 bg-blue-100 min-h-screen text-gray-800">
       <h1 className="text-2xl font-bold mb-6 text-center text-blue-600">
-        HKDSE Academic Reading AI \u52a9\u624b
+        HKDSE Academic Reading AI 助手
       </h1>
 
       <div className="mb-6">
-        <div className="font-semibold mb-2">\ud83d\udcd8 \u9009\u62e9\u8003\u8bd5\uff1a</div>
+        <div className="font-semibold mb-2">📘 选择考试：</div>
         <div className="flex flex-wrap gap-3">
           {exams.map(exam => (
             <button
@@ -174,61 +174,61 @@ export default function App() {
       </div>
 
       <div className="mb-6">
-        <div className="font-semibold mb-2">\ud83d\udcdd \u63d0\u95ee\u95ee\u9898\uff1a</div>
+        <div className="font-semibold mb-2">📝 提问问题：</div>
         <textarea
           className="w-full p-2 rounded border border-blue-300"
           rows="4"
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
-          placeholder="\u4f8b\u5982\uff1aWhat is the answer to Q18? \u6216\u8005 Which paragraph mentions tourism in the Arctic?"
+          placeholder="例如：What is the answer to Q18? 或者 Which paragraph mentions tourism in the Arctic?"
         />
         <div className="mt-2 flex gap-3">
           <button
             onClick={handleSubmit}
             className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
           >
-            \u63d0\u4ea4\u95ee\u9898
+            提交问题
           </button>
           <button
             onClick={() => window.startVoiceInput()}
             className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded"
           >
-            \ud83c\udfa4 \u8bed\u97f3\u63d0\u95ee
+            🎤 语音提问
           </button>
         </div>
       </div>
 
       <div className="mb-6">
-        <div className="font-semibold mb-2">\ud83d\udce5 \u56de\u7b54\u7ed3\u679c\uff1a</div>
+        <div className="font-semibold mb-2">📥 回答结果：</div>
         <div className="bg-white text-gray-700 p-4 rounded min-h-[100px] border border-blue-200 whitespace-pre-wrap">
-          {response || "\u63d0\u4ea4\u95ee\u9898\u540e\u5c06\u663e\u793a\u7b54\u6848"}
+          {response || "提交问题后将显示答案"}
         </div>
         <div className="mt-2 flex gap-2">
           <button
             onClick={() => speakMixed(response)}
             className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
           >
-            \ud83d\udd0a \u542c\u56de\u7b54
+            🔊 听回答
           </button>
           <button
             onClick={() => window.speechSynthesis.cancel()}
             className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
           >
-            \ud83d\udd07 \u505c\u6b62\u64ad\u653e
+            🔇 停止播放
           </button>
         </div>
       </div>
 
       <div>
-        <div className="font-semibold mb-2">\ud83d\udcdc \u5386\u53f2\u5bf9\u8bdd\uff1a</div>
+        <div className="font-semibold mb-2">📜 历史对话：</div>
         {history.length === 0 ? (
-          <div className="text-gray-500">\u6682\u65e0\u5386\u53f2\u8bb0\u5f55</div>
+          <div className="text-gray-500">暂无历史记录</div>
         ) : (
           <ul className="space-y-3">
             {history.map((item, index) => (
               <li key={index} className="bg-white p-3 rounded border border-blue-200">
-                <div className="text-blue-700 text-sm">\u60a8\u95ee\uff1a{item.question}</div>
-                <div className="text-green-600 text-sm mt-1">AI \u56de\u7b54\uff1a{item.answer}</div>
+                <div className="text-blue-700 text-sm">您问：{item.question}</div>
+                <div className="text-green-600 text-sm mt-1">AI 回答：{item.answer}</div>
               </li>
             ))}
           </ul>
