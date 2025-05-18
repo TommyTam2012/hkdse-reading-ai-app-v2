@@ -134,7 +134,7 @@ export default function App() {
     const recognition = new SpeechRecognition();
     recognition.lang = speechLang;
     recognition.continuous = false;
-    recognition.interimResults = false;
+    recognition.interimResults = true;
 
     let isListening = false;
 
@@ -169,9 +169,20 @@ export default function App() {
 
   return (
     <div className="p-6 bg-blue-100 min-h-screen text-gray-800">
-      <h1 className="text-2xl font-bold mb-6 text-center text-blue-600">
-        HKDSE Academic Reading AI 助手
-      </h1>
+      <h1 className="text-2xl font-bold mb-2 text-center text-blue-600">
+  HKDSE Academic Reading AI 助手
+</h1>
+<div className="mb-4 text-center">
+  <label className="font-semibold mr-2">🎙️ 語音語言：</label>
+  <select
+    value={speechLang}
+    onChange={(e) => setSpeechLang(e.target.value)}
+    className="p-2 border border-blue-300 rounded"
+  >
+    <option value="en-US">English</option>
+    <option value="zh-CN">中文</option>
+  </select>
+</div>
 
       <div className="mb-6">
         <div className="font-semibold mb-2">📘 选择考试：</div>
