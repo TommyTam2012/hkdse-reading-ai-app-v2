@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HKDSE 文凭试閱讀 AI 考試助手</title>
+  <link rel="stylesheet" href="/style.css" />
+  <script>console.log("🧭 HKDSE index.html loaded");</script>  
+  <style>
+    .exam-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .exam-btn {
+      background: #003366;
+      color: white;
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-size: 16px;
+      width: 180px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+    }
+    .exam-btn:hover {
+      background: #0055aa;
+    }
+    .school-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+    }
+    .school-logo {
+      height: 50px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Main App -->
+  <header>
+    <div class="school-header">
+      <img src="/exam/HKDSE/logo.png" alt="School Logo" class="school-logo" />
+      <h1>TommySir 的 HKDSE 文凭试閱讀 AI 考試助手</h1>
+    </div>
+  </header>
+
+  <main>
+    <section class="selectors">
+      <h2>選擇 HKDSE 考試：</h2>
+      <div class="exam-grid">
+        <div class="exam-btn" onclick="setExam('2012A')">📘 文凭試2012A</div>
+        <div class="exam-btn" onclick="setExam('2012B')">📘 文凭試 2012B</div>
+        <div class="exam-btn" onclick="setExam('2012C')">📘 文凭試 2012C</div>
+        <div class="exam-btn" onclick="setExam('2013A')">📘 文凭試2013A</div>
+        <div class="exam-btn" onclick="setExam('2013B')">📘 文凭試 2013B</div>
+        <div class="exam-btn" onclick="setExam('2013C')">📘 文凭試 2013C</div>
+      </div>
+    </section>
+
+    <section class="question">
+      <h2>問題查詢</h2>
+      <textarea id="questionInput" placeholder="請輸入您的問題..."></textarea>
+      <div>
+        <button onclick="submitQuestion()">提交問題</button>
+        <button id="micBtn" style="margin-left: 10px;">🎤 語音提問</button>
+      </div>
+    </section>
+
+    <section class="response">
+      <h2>回答結果</h2>
+      <div id="responseBox">提交問題後將顯示答案</div>
+      <div style="margin-top: 10px;">
+        <button id="ttsBtn">🔊 聽英文與中文回答</button>
+        <button id="stopTTSBtn" style="margin-left: 10px;">🔇 停止播放</button>
+      </div>
+    </section>
+
+    <section class="history">
+      <h2>歷史對話</h2>
+      <ul id="historyList"></ul>
+      <button onclick="clearHistory()" style="margin-top:10px;">🧹 清除歷史</button>
+    </section>
+  </main>
+
+  <script src="/script.js"></script>
+</body>
+</html>
