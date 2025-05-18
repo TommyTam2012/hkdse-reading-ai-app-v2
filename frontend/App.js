@@ -141,7 +141,7 @@ export default function App() {
     recognition.onresult = (event) => {
       const spoken = event.results[0][0].transcript;
       setQuestion(spoken);
-      handleSubmit();
+      setTimeout(() => handleSubmit(), 500);
     };
 
     recognition.onerror = (event) => {
@@ -201,17 +201,7 @@ export default function App() {
           ))}
         </div>
 
-      <div className="mt-4">
-        <label className="font-semibold mr-2">🎙️ 语音识别语言：</label>
-        <select
-          value={speechLang}
-          onChange={(e) => setSpeechLang(e.target.value)}
-          className="p-2 border rounded border-blue-300"
-        >
-          <option value="en-US">English</option>
-          <option value="zh-CN">中文</option>
-        </select>
-      </div>
+      
 
       </div>
       <div className="mb-6">
@@ -223,19 +213,7 @@ export default function App() {
           onChange={(e) => setQuestion(e.target.value)}
           placeholder="例如：What is the answer to Q18? 或者 Which paragraph mentions tourism in the Arctic?"
         />
-        <div className="mt-2">
-  <label className="font-semibold mr-2">🎙️ 語音語言：</label>
-  <select
-    value={speechLang}
-    onChange={(e) => setSpeechLang(e.target.value)}
-    className="p-2 border border-blue-300 rounded"
-  >
-    <option value="en-US">English</option>
-    <option value="zh-CN">中文</option>
-  </select>
-</div>
-
-$1
+        
           <button
             onClick={handleSubmit}
             className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
