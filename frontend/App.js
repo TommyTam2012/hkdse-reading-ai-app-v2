@@ -135,18 +135,35 @@ export default function App() {
     recognition.continuous = false;
     recognition.interimResults = false;
 
-    const handleMic = () => recognition.start();
+    let isListening = false;
+
     recognition.onresult = (event) => {
       const spoken = event.results[0][0].transcript;
       setQuestion(spoken);
       handleSubmit();
     };
+
     recognition.onerror = (event) => {
-      alert("🎤 Speech recognition failed.");
+      alert("🎤 语音识别失败");
       console.error("Mic error:", event.error);
     };
 
-    window.startVoiceInput = handleMic;
+    const startListening = () => {
+      if (!isListening) {
+        recognition.start();
+        isListening = true;
+      }
+    };
+
+    const stopListening = () => {
+      if (isListening) {
+        recognition.stop();
+        isListening = false;
+      }
+    };
+
+    window.startVoiceInput = startListening;
+    window.stopVoiceInput = stopListening;
   }, []);
 
   return (
@@ -190,11 +207,14 @@ export default function App() {
             提交问题
           </button>
           <button
-            onClick={() => window.startVoiceInput()}
-            className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded"
-          >
-            🎤 语音提问
-          </button>
+  onMouseDown={() => window.startVoiceInput()}
+  onMouseUp={() => window.stopVoiceInput()}
+  onTouchStart={() => window.startVoiceInput()}
+  onTouchEnd={() => window.stopVoiceInput()}
+  className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded"
+>
+  🎤 长按说话
+</button>
         </div>
       </div>
 
