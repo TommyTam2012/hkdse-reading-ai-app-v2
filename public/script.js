@@ -1,37 +1,5 @@
 console.log("🟢 script.js loaded successfully");
 
-// ✅ Logging directly to Upstash
-async function logToUpstash(name, email, action = "login") {
-  const hkTime = new Date().toLocaleString("en-US", {
-    timeZone: "Asia/Hong_Kong"
-  });
-
-  const logKey = `log:${Date.now()}`;
-  const logValue = JSON.stringify({ name, email, action, time: hkTime });
-
-  const url = "https://firm-imp-16671.upstash.io/set/" + logKey;
-
-  try {
-    const res = await fetch(url, {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer AUEfAAIjcDFkMTBkNTFmYmIzM2I0ZGQwYTUzODk5NDI2YmZkNTMwZHAxMA",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(logValue)
-    });
-
-    if (res.ok) {
-      console.log("✅ Log stored in Upstash");
-    } else {
-      const text = await res.text();
-      throw new Error(`❌ Failed to log: ${text}`);
-    }
-  } catch (err) {
-    console.error("❌ Network error:", err);
-  }
-}
-
 const responseBox = document.getElementById("responseBox");
 const questionInput = document.getElementById("questionInput");
 const historyList = document.getElementById("historyList");
@@ -48,7 +16,10 @@ let currentExamId = "";
 
 function setExam(examId) {
   currentExamId = examId;
-  const pdfUrl = `/exams/hkdse/${examId}.pdf`;
+
+  // Always use hkdseXXXX.pdf format
+  const pdfUrl = `/exams/hkdse/hkdse${examId}.pdf`;
+  console.log(`📘 Opening exam PDF: ${pdfUrl}`);
   window.open(pdfUrl, "_blank");
 }
 
@@ -68,7 +39,7 @@ async function submitQuestion() {
   translationBox.textContent = "";
 
   const instruction = `
-You are an hkdse Academic Reading instructor. The student is asking about test ${currentExamId.toUpperCase()}.
+You are an HKDSE Academic Reading instructor. The student is asking about test ${currentExamId}.
 If they ask about a specific question (e.g., Q5 or paragraph C), find the correct answer from the images provided.
 After providing the answer:
 1. State which paragraph or section contains the answer.
@@ -78,7 +49,7 @@ Only summarize the passage if the student requests it explicitly.
 `;
 
   const maxPages = 13;
-  const baseUrl = `${window.location.origin}/exams/hkdse/${currentExamId}_page`;
+  const baseUrl = `${window.location.origin}/exams/hkdse/hkdse${currentExamId}_page`;
   const imageMessages = [
     { type: "text", text: instruction },
     { type: "text", text: question }
@@ -210,3 +181,4 @@ if (window.SpeechRecognition || window.webkitSpeechRecognition) {
 window.submitQuestion = submitQuestion;
 window.setExam = setExam;
 window.clearHistory = clearHistory;
+
