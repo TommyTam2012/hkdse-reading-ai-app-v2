@@ -1,0 +1,122 @@
+body {
+  margin: 0;
+  font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  background-color: #f4f8fb;
+  color: #003366;
+}
+
+h1, h2 {
+  text-align: center;
+  color: #003366;
+}
+
+textarea {
+  width: 100%;
+  max-width: 600px;
+  height: 100px;
+  font-size: 16px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+button {
+  font-size: 16px;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #003366;
+  color: white;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background-color: #0055aa;
+}
+
+.exam-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.exam-btn {
+  background: #003366;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  width: 180px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.exam-btn:hover {
+  background: #0055aa;
+}
+
+.history li {
+  margin-bottom: 12px;
+  padding: 10px;
+  background: #fff;
+  border-left: 4px solid #003366;
+  border-radius: 4px;
+  line-height: 1.5;
+  list-style: none;
+}
+
+#responseBox {
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  min-height: 80px;
+  max-width: 100%;
+  font-size: 16
+.admin-container {
+  padding: 40px;
+  max-width: 960px;
+  margin: 0 auto;
+  font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+}
+
+.admin-header {
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #003366;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fefefe;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+
+.admin-table th {
+  background: #003366;
+  color: white;
+  padding: 10px;
+  text-align: left;
+}
+
+.admin-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ccc;
+}
+
+.delete-btn {
+  padding: 4px 10px;
+  color: white;
+  background: #cc0000;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
