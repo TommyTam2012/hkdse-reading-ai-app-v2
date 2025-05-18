@@ -46,7 +46,7 @@ export default function App() {
   }
 
   const exams = [
-    { id: "2012A", label: "📘 HKDSE Academic Reading 2012A", pdf: "/exams/hkdse/hkdse2012A.pdf" },
+    { id: "2012A", label: "📘 HKDSE Academic Reading 2012A", pdf: `/exams/hkdse/hkdse2012A.pdf` },
     { id: "2012B", label: "📘 HKDSE Academic Reading 2012B", pdf: "/exams/hkdse/hkdse2012B.pdf" },
     { id: "2012C", label: "📘 HKDSE Academic Reading 2012C", pdf: "/exams/hkdse/hkdse2012C.pdf" },
     { id: "2013A", label: "📘 HKDSE Academic Reading 2013A", pdf: "/exams/hkdse/hkdse2013A.pdf" },
