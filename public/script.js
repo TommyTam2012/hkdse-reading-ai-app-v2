@@ -50,7 +50,6 @@ function setExam(examId) {
   currentExamId = examId;
   const pdfUrl = `/exams/hkdse/${examId}.pdf`;
   window.open(pdfUrl, "_blank");
-  console.log(`📘 Exam set to ${examId}`);
 }
 
 function clearHistory() {
