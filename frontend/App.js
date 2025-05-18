@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [speechLang, setSpeechLang] = useState("en-US");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -131,7 +132,7 @@ export default function App() {
     if (!("SpeechRecognition" in window || "webkitSpeechRecognition" in window)) return;
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = new SpeechRecognition();
-    recognition.lang = "zh-CN";
+    recognition.lang = speechLang;
     recognition.continuous = false;
     recognition.interimResults = false;
 
@@ -188,8 +189,20 @@ export default function App() {
             </button>
           ))}
         </div>
+
+      <div className="mt-4">
+        <label className="font-semibold mr-2">🎙️ 语音识别语言：</label>
+        <select
+          value={speechLang}
+          onChange={(e) => setSpeechLang(e.target.value)}
+          className="p-2 border rounded border-blue-300"
+        >
+          <option value="en-US">English</option>
+          <option value="zh-CN">中文</option>
+        </select>
       </div>
 
+      </div>
       <div className="mb-6">
         <div className="font-semibold mb-2">📝 提问问题：</div>
         <textarea
