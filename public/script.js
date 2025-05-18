@@ -79,7 +79,7 @@ Only summarize the passage if the student requests it explicitly.
 `;
 
   const maxPages = 13;
-  const baseUrl = `${window.location.origin}/exam/IELTS/${currentExamId}_page`;
+  const baseUrl = `${window.location.origin}/exam/hkdse/${currentExamId}_page`;
   const imageMessages = [
     { type: "text", text: instruction },
     { type: "text", text: question }
