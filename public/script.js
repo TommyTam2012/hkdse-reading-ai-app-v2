@@ -137,45 +137,71 @@ document.getElementById("stopTTSBtn")?.addEventListener("click", () => {
 if (window.SpeechRecognition || window.webkitSpeechRecognition) {
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = new SpeechRecognition();
-  recognition.lang = "zh-CN";
+  recognition.lang = "zh-CN"; // keep Chinese voice input
   recognition.continuous = false;
   recognition.interimResults = false;
 
-  micBtn.addEventListener("mousedown", () => {
-    recognition.start();
-    micBtn.textContent = "🎤 錄音中... (請持續按住)";
-  });
+  let finalTranscript = "";
+  let isHoldingMic = false;
+  let restartCount = 0;
+  const maxRestarts = 3; // ~10 seconds total (3x3s)
 
-  micBtn.addEventListener("mouseup", () => {
-    recognition.stop();
-    micBtn.textContent = "🎤 語音提問";
-  });
-
-  micBtn.addEventListener("mouseleave", () => {
-    recognition.stop();
-    micBtn.textContent = "🎤 語音提問";
-  });
-
-  micBtn.addEventListener("touchstart", () => {
-    recognition.start();
-    micBtn.textContent = "🎤 錄音中... (請持續按住)";
-  });
-
-  micBtn.addEventListener("touchend", () => {
-    recognition.stop();
-    micBtn.textContent = "🎤 語音提問";
-  });
+  recognition.onstart = () => {
+    micBtn.textContent = "🎤 正在录音... (松开发送)";
+    console.log("🎙️ Mic started");
+  };
 
   recognition.onresult = (event) => {
-    const spoken = event.results[0][0].transcript;
-    questionInput.value = spoken;
-    submitQuestion();
+    finalTranscript = event.results[0][0].transcript;
+    console.log("📥 Captured:", finalTranscript);
+  };
+
+  recognition.onend = () => {
+    if (isHoldingMic && restartCount < maxRestarts) {
+      console.log("🔁 Restarting mic (hold still active)");
+      restartCount++;
+      recognition.start();
+    } else {
+      micBtn.textContent = "🎤 语音提问";
+      console.log("🛑 Mic released or max restarts reached");
+      if (finalTranscript.trim()) {
+        questionInput.value = finalTranscript;
+        submitQuestion();
+      } else {
+        console.log("⚠️ 没有检测到语音内容。");
+      }
+    }
   };
 
   recognition.onerror = (event) => {
-    alert("🎤 錄音失敗，請重試。");
-    console.error("Mic error:", event.error);
+    console.error("🎤 Speech error:", event.error);
+    micBtn.textContent = "🎤 语音提问";
   };
+
+  // 🧲 Hold-to-speak logic
+  micBtn.addEventListener("mousedown", () => {
+    isHoldingMic = true;
+    restartCount = 0;
+    finalTranscript = "";
+    recognition.start();
+  });
+
+  micBtn.addEventListener("mouseup", () => {
+    isHoldingMic = false;
+    recognition.stop();
+  });
+
+  micBtn.addEventListener("touchstart", () => {
+    isHoldingMic = true;
+    restartCount = 0;
+    finalTranscript = "";
+    recognition.start();
+  });
+
+  micBtn.addEventListener("touchend", () => {
+    isHoldingMic = false;
+    recognition.stop();
+  });
 }
 
 window.submitQuestion = submitQuestion;
